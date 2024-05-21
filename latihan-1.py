@@ -1,53 +1,56 @@
-# Aplikasi Play Store
 def aplikasiPlayStore(n):
-    # Membuat dictionary berisi Kategori dan Aplikasi
-    dictKategori = dict()
+    # Membuat dictionary untuk menyimpan kategori dan aplikasinya
+    kategoriDict = {}
     for i in range(n):
-        kategori = str(input(f'Masukkan kategori ke {i+1}: '))
-        lstAplikasi = []
+        kategori = str(input(f'Masukkan nama kategori ke-{i + 1}: '))
+        aplikasiList = []
         for j in range(5):
-            aplikasi = str(input(f'Masukkan aplikasi ke {j+1} dari kategori {kategori}: '))
-            lstAplikasi.append(aplikasi)
-        else:
-            dictKategori[kategori] = lstAplikasi
-            print()
-    print(dictKategori)
+            aplikasi = str(input(f'Masukkan nama aplikasi ke-{j + 1} dalam kategori {kategori}: '))
+            aplikasiList.append(aplikasi)
+        kategoriDict[kategori] = aplikasiList
+        print()
+
+    print(kategoriDict)
     print()
-    
-    # Membuat List Untuk Menyimpan Aplikasi Dari Dictionary
-    listAplikasi = []
-    for k in dictKategori.keys():
-        listAplikasi.append(dictKategori[k])
-    # Aplikasi Yang Terdapat Pada Semua Kategori
-    hasil = set(listAplikasi[0])
-    for i in range(1, len(listAplikasi)):
-        hasil = hasil.intersection(set(listAplikasi[i]))
-    if len(hasil) > 0:
-        print("Aplikasi Yang Terdapat Pada Semua Kategori:", hasil)
+
+    # Membuat list untuk menyimpan aplikasi dari setiap kategori
+    semuaAplikasi = []
+    for k in kategoriDict.keys():
+        semuaAplikasi.append(kategoriDict[k])
+
+    # Mencari aplikasi yang muncul di semua kategori
+    hasil = set(semuaAplikasi[0])
+    for i in range(1, len(semuaAplikasi)):
+        hasil = hasil.intersection(set(semuaAplikasi[i]))
+    if hasil:
+        print("Aplikasi yang ada di semua kategori:", hasil)
     else:
-        print('Tidak Ada Aplikasi Yang Muncul Pada Semua Kategori!')
-    # Aplikasi Yang Muncul Hanya Pada Satu Kategori (fitur tambahan 1)
-    hasil1 = set(listAplikasi[0])
-    for i in range(1, len(listAplikasi)):
-        hasil1 = hasil1.symmetric_difference((set(listAplikasi[i])))
-    if len(hasil1) > 0:
-        print("Aplikasi Yang Muncul Hanya Pada Satu Kategori:", hasil1)
+        print('Tidak ada aplikasi yang muncul di semua kategori!')
+
+    # Mencari aplikasi yang hanya ada di satu kategori
+    unikHasil = set(semuaAplikasi[0])
+    for i in range(1, len(semuaAplikasi)):
+        unikHasil = unikHasil.symmetric_difference(set(semuaAplikasi[i]))
+    if unikHasil:
+        print("Aplikasi yang hanya ada di satu kategori:", unikHasil)
     else:
-        print('Semua Aplikasi Muncul Pada Semua Kategori!')
-    # Aplikasi Yang Muncul Tepat 2 Kategori (fitur tambahan 2)
+        print('Semua aplikasi muncul di lebih dari satu kategori!')
+
+    # Mencari aplikasi yang muncul tepat di dua kategori
     if n > 2:
-        dictAplikasi = {}
-        for lst in listAplikasi:
+        aplikasiCounter = {}
+        for lst in semuaAplikasi:
             for aplikasi in lst:
-                if aplikasi in dictAplikasi:
-                    dictAplikasi[aplikasi] += 1
+                if aplikasi in aplikasiCounter:
+                    aplikasiCounter[aplikasi] += 1
                 else:
-                    dictAplikasi[aplikasi] = 1
-        hasil2 = set([k for k, v in dictAplikasi.items() if v == 2])
-        if hasil2:
-            print('Aplikasi Yang Muncul Tepat 2 Kategori:', hasil2)
+                    aplikasiCounter[aplikasi] = 1
+        duaKategoriHasil = {app for app, count in aplikasiCounter.items() if count == 2}
+        if duaKategoriHasil:
+            print('Aplikasi yang muncul tepat di dua kategori:', duaKategoriHasil)
         else:
-            print('Tidak ada aplikasi yang muncul tepat 2 kategori!')
-    
-n = int(input('Masukkan berapa kategori: '))
+            print('Tidak ada aplikasi yang muncul tepat di dua kategori!')
+
+# Meminta input jumlah kategori dari pengguna
+n = int(input('Masukkan jumlah kategori: '))
 aplikasiPlayStore(n)
